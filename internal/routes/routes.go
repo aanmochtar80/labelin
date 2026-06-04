@@ -40,6 +40,15 @@ func SetupRoutes(app *fiber.App, cfg config.Config) {
 		}, "layouts/main")
 	})
 
+	app.Get("/settings", func(c *fiber.Ctx) error {
+		var setting models.Setting
+		config.DB.First(&setting)
+		return c.Render("pages/settings", fiber.Map{
+			"Setting": setting,
+			"Title": "Pengaturan",
+		}, "layouts/main")
+	})
+
 	// API Group
 	api := app.Group("/api")
 
@@ -50,6 +59,23 @@ func SetupRoutes(app *fiber.App, cfg config.Config) {
 	guests.Delete("/:id", DeleteGuest)
 	guests.Post("/import", ImportGuests)
 	guests.Post("/print", PrintLabels)
+	// Settings API
+	api.Post("/settings", UpdateSettings)
+}
+
+// UpdateSettings
+func UpdateSettings(c *fiber.Ctx) error {
+	var setting models.Setting
+	if err := c.BodyParser(&setting); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
+	
+	var current models.Setting
+	config.DB.First(&current)
+	setting.ID = current.ID // Update existing
+	
+	config.DB.Save(&setting)
+	return c.SendStatus(200)
 }
 
 // GetGuests

@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Pengaturan</h2>
+    <button class="btn btn-primary" type="submit" form="settingsForm">
+        <i class="bi bi-save me-1"></i> Simpan Perubahan
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card card-glass border-0 rounded-4 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <form id="settingsForm" hx-post="/api/settings" hx-swap="none" hx-on="htmx:afterRequest: alert('Pengaturan berhasil disimpan!')">
+                    <h5 class="fw-bold mb-3">Informasi Acara</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-semibold">Nama Acara</label>
+                        <input type="text" class="form-control form-control-lg" name="event_name" value="Pernikahan Romeo & Juliet" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label text-muted fw-semibold">Teks Footer Label</label>
+                        <textarea class="form-control" name="footer_text" rows="2" placeholder="Terima kasih atas kehadiran Bapak/Ibu/Saudara/i"></textarea>
+                        <div class="form-text">Teks ini bisa ditampilkan di bagian bawah stiker label (opsional).</div>
+                    </div>
+
+                    <hr class="my-4 text-muted">
+
+                    <h5 class="fw-bold mb-3">Preferensi Cetak</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-semibold">Template Default</label>
+                        <select class="form-select form-control-lg" name="default_template_id">
+                            <option value="1" selected>Tom & Jerry 103 (103mm x 36mm)</option>
+                            <option value="2">Custom Label A4</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
