@@ -3,7 +3,7 @@ services:
   labelin:
     build: .
     ports:
-      - "3000:3000"
+      - "3030:3000"
     environment:
       - PORT=3000
       - DB_DRIVER=sqlite
