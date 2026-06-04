@@ -1,0 +1,17 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+labelin_linux_amd64
+labelin_windows_amd64.exe
+labelin
+
+# DB
+*.db
+*.sqlite
+
+# OS specific files
+.DS_Store
+Thumbs.db
