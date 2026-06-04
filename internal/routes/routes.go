@@ -14,12 +14,7 @@ func SetupRoutes(app *fiber.App, cfg config.Config) {
 
 	// HTMX Views / Frontend (Public/No Auth for simplicity in this demo, but should be protected)
 	app.Get("/", func(c *fiber.Ctx) error {
-		var totalGuests int64
-		config.DB.Model(&models.Guest{}).Count(&totalGuests)
-		return c.Render("pages/dashboard", fiber.Map{
-			"TotalGuests": totalGuests,
-			"Title": "Dashboard",
-		}, "layouts/main")
+		return c.Redirect("/guests")
 	})
 
 	app.Get("/guests", func(c *fiber.Ctx) error {
