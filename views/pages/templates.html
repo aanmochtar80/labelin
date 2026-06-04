@@ -6,6 +6,7 @@
 </div>
 
 <div class="row g-4">
+    {{range .Templates}}
     <!-- Template Card -->
     <div class="col-md-4">
         <div class="card card-glass border-0 rounded-4 shadow-sm h-100">
@@ -20,22 +21,25 @@
                         </button>
                         <ul class="dropdown-menu border-0 shadow-sm">
                             <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
-                            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Hapus</a></li>
+                            <li><a class="dropdown-item text-danger" href="#" hx-delete="/api/templates/{{.ID}}" hx-confirm="Hapus template ini?"><i class="bi bi-trash me-2"></i>Hapus</a></li>
                         </ul>
                     </div>
                 </div>
-                <h5 class="fw-bold mb-1">Tom & Jerry 103</h5>
-                <p class="text-muted mb-3 small">103mm x 36mm</p>
+                <h5 class="fw-bold mb-1">{{.Name}}</h5>
+                <p class="text-muted mb-3 small">{{.Width}}mm x {{.Height}}mm</p>
                 
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge bg-light text-dark border">Default</span>
-                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#printModal">
+                    <span class="badge bg-light text-dark border">ID: {{.ID}}</span>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#printModal" onclick="document.getElementById('printTemplateId').value = '{{.ID}}'">
                         Gunakan
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    {{else}}
+    <div class="col-12 text-center py-5 text-muted">Belum ada template.</div>
+    {{end}}
 </div>
 
 <!-- Print Modal -->
@@ -48,7 +52,7 @@
             </div>
             <form action="/api/guests/print" method="POST" target="_blank">
                 <div class="modal-body py-0">
-                    <input type="hidden" name="template_id" value="1">
+                    <input type="hidden" name="template_id" id="printTemplateId" value="">
                     <p class="text-muted small">Pilih data yang ingin dicetak.</p>
                     <div class="mb-3">
                         <label class="form-label">Kategori Tamu</label>
@@ -62,6 +66,64 @@
                 <div class="modal-footer border-top-0">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary"><i class="bi bi-printer me-1"></i> Cetak PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Template Modal -->
+<div class="modal fade" id="addTemplateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 rounded-4">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title fw-bold">Tambah Template Baru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form hx-post="/api/templates" hx-on="htmx:afterRequest: if(event.detail.successful) location.reload()">
+                <div class="modal-body py-0">
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-semibold">Nama Template</label>
+                        <input type="text" class="form-control" name="name" required placeholder="Contoh: Label A4">
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Lebar (mm)</label>
+                            <input type="number" step="0.1" class="form-control" name="width" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Tinggi (mm)</label>
+                            <input type="number" step="0.1" class="form-control" name="height" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Margin Atas (mm)</label>
+                            <input type="number" step="0.1" class="form-control" name="margin_top" required value="0">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Margin Kiri (mm)</label>
+                            <input type="number" step="0.1" class="form-control" name="margin_left" required value="0">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Spasi X (mm)</label>
+                            <input type="number" step="0.1" class="form-control" name="spacing_x" required value="0">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Spasi Y (mm)</label>
+                            <input type="number" step="0.1" class="form-control" name="spacing_y" required value="0">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Kolom</label>
+                            <input type="number" class="form-control" name="columns" required value="1">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted fw-semibold">Baris</label>
+                            <input type="number" class="form-control" name="rows" required value="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 mt-3">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Simpan Template</button>
                 </div>
             </form>
         </div>

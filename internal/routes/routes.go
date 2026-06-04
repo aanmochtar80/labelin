@@ -61,6 +61,32 @@ func SetupRoutes(app *fiber.App, cfg config.Config) {
 	guests.Post("/print", PrintLabels)
 	// Settings API
 	api.Post("/settings", UpdateSettings)
+
+	// Templates API
+	templates := api.Group("/templates")
+	templates.Post("/", CreateTemplate)
+	templates.Delete("/:id", DeleteTemplate)
+}
+
+// CreateTemplate
+func CreateTemplate(c *fiber.Ctx) error {
+	tpl := new(models.LabelTemplate)
+	if err := c.BodyParser(tpl); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
+	config.DB.Create(&tpl)
+	
+	if string(c.Request().Header.Peek("Hx-Request")) == "true" {
+		c.Response().Header.Set("HX-Refresh", "true")
+		return c.SendStatus(200)
+	}
+	return c.JSON(tpl)
+}
+
+func DeleteTemplate(c *fiber.Ctx) error {
+	id := c.Params("id")
+	config.DB.Delete(&models.LabelTemplate{}, id)
+	return c.SendStatus(200)
 }
 
 // UpdateSettings
