@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  labelin:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_DRIVER=sqlite
+      - DB_DSN=/data/labelin.db
+    volumes:
+      - labelin_data:/data
+volumes:
+  labelin_data:

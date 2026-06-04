@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Template Label</h2>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTemplateModal">
+        <i class="bi bi-plus-lg me-1"></i> Template Baru
+    </button>
+</div>
+
+<div class="row g-4">
+    <!-- Template Card -->
+    <div class="col-md-4">
+        <div class="card card-glass border-0 rounded-4 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-4">
+                        <i class="bi bi-layout-text-window fs-3"></i>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-sm rounded-circle" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu border-0 shadow-sm">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Hapus</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-1">Tom & Jerry 103</h5>
+                <p class="text-muted mb-3 small">103mm x 36mm</p>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark border">Default</span>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#printModal">
+                        Gunakan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Modal -->
+<div class="modal fade" id="printModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 rounded-4">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title fw-bold">Cetak Label Massal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/api/guests/print" method="POST" target="_blank">
+                <div class="modal-body py-0">
+                    <input type="hidden" name="template_id" value="1">
+                    <p class="text-muted small">Pilih data yang ingin dicetak.</p>
+                    <div class="mb-3">
+                        <label class="form-label">Kategori Tamu</label>
+                        <select class="form-select" name="category_id">
+                            <option value="">Semua Kategori</option>
+                            <option value="1">VIP</option>
+                            <option value="2">Umum</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer me-1"></i> Cetak PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

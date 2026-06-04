@@ -1,0 +1,89 @@
+<h2 class="mb-4 fw-bold">Dashboard</h2>
+
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="card card-glass border-0 rounded-4 p-3 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-semibold mb-0">Total Tamu</h6>
+                    <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3">
+                        <i class="bi bi-people fs-4"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-0">{{.TotalGuests}}</h3>
+                <small class="text-success"><i class="bi bi-arrow-up-short"></i> 12% dari bulan lalu</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-glass border-0 rounded-4 p-3 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-semibold mb-0">Label Dicetak</h6>
+                    <div class="bg-success bg-opacity-10 text-success p-2 rounded-3">
+                        <i class="bi bi-printer fs-4"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-0">0</h3>
+                <small class="text-muted">Total dicetak</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-glass border-0 rounded-4 p-3 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-semibold mb-0">Belum Dicetak</h6>
+                    <div class="bg-warning bg-opacity-10 text-warning p-2 rounded-3">
+                        <i class="bi bi-hourglass-split fs-4"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-0">{{.TotalGuests}}</h3>
+                <small class="text-muted">Menunggu antrian</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-glass border-0 rounded-4 p-3 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-semibold mb-0">Kategori</h6>
+                    <div class="bg-info bg-opacity-10 text-info p-2 rounded-3">
+                        <i class="bi bi-tags fs-4"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-0">0</h3>
+                <small class="text-muted">Total kategori</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card card-glass border-0 rounded-4 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 pb-0 px-4">
+                <h5 class="fw-bold">Aktivitas Terakhir</h5>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Waktu</th>
+                                <th>Pengguna</th>
+                                <th>Aksi</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">Belum ada aktivitas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

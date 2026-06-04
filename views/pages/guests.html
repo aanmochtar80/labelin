@@ -1,0 +1,122 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Master Data Tamu</h2>
+    <div>
+        <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="bi bi-file-earmark-excel me-1"></i> Import Excel
+        </button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGuestModal">
+            <i class="bi bi-plus-lg me-1"></i> Tambah Tamu
+        </button>
+    </div>
+</div>
+
+<div class="card card-glass border-0 rounded-4 shadow-sm mb-4">
+    <div class="card-body p-4">
+        <form class="row g-3">
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Cari nama atau instansi...">
+            </div>
+            <div class="col-md-3">
+                <select class="form-select">
+                    <option selected>Semua Kategori</option>
+                    <option value="1">VIP</option>
+                    <option value="2">Keluarga</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select">
+                    <option selected>Status Cetak</option>
+                    <option value="0">Belum Dicetak</option>
+                    <option value="1">Sudah Dicetak</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button type="button" class="btn btn-secondary">Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card card-glass border-0 rounded-4 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">
+                            <input class="form-check-input" type="checkbox" id="selectAll">
+                        </th>
+                        <th>Nama Lengkap</th>
+                        <th>Instansi</th>
+                        <th>Alamat</th>
+                        <th>Kota</th>
+                        <th>Kategori</th>
+                        <th>Status Cetak</th>
+                        <th class="pe-4 text-end">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="guest-list">
+                    {{range .Guests}}
+                    <tr>
+                        <td class="ps-4">
+                            <input class="form-check-input" type="checkbox" value="{{.ID}}">
+                        </td>
+                        <td>
+                            <div class="fw-semibold">{{.FullName}}</div>
+                            <small class="text-muted">{{.Phone}}</small>
+                        </td>
+                        <td>{{.Institution}}</td>
+                        <td>
+                            <span class="d-inline-block text-truncate" style="max-width: 150px;">{{.Address}}</span>
+                        </td>
+                        <td>{{.City}}</td>
+                        <td>
+                            <span class="badge bg-secondary rounded-pill">Umum</span>
+                        </td>
+                        <td>
+                            {{if .PrintStatus}}
+                            <span class="badge bg-success rounded-pill">Sudah</span>
+                            {{else}}
+                            <span class="badge bg-warning text-dark rounded-pill">Belum</span>
+                            {{end}}
+                        </td>
+                        <td class="pe-4 text-end">
+                            <button class="btn btn-sm btn-light text-primary" title="Edit"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-light text-danger" title="Hapus"
+                                hx-delete="/api/guests/{{.ID}}" hx-confirm="Yakin ingin menghapus?">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">Belum ada data tamu.</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 rounded-4">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title fw-bold">Import Data Excel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form hx-post="/api/guests/import" hx-encoding="multipart/form-data" hx-on="htmx:afterRequest: alert('Upload selesai. Reload halaman untuk melihat hasil.')">
+                <div class="modal-body py-0">
+                    <p class="text-muted small">Upload file .xlsx atau .xls sesuai dengan template yang ditentukan.</p>
+                    <input class="form-control" type="file" name="file" accept=".xlsx, .xls" required>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Mulai Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
